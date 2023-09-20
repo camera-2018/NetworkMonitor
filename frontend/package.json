@@ -9,16 +9,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "3d-force-graph": "^1.72.3",
     "@antv/g6": "^4.8.10",
     "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "netmask": "^2.0.2",
+    "three": "^0.156.1",
+    "three-spritetext": "^1.8.1",
     "vue": "^3.2.47",
     "vue-echarts": "^6.5.5"
   },
   "devDependencies": {
     "@types/netmask": "^2.0.1",
     "@types/node": "^20.1.1",
+    "@types/three": "^0.156.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
