@@ -153,7 +153,7 @@ onMounted(async () => {
         return "#138385"
       })
       .nodeResolution(32)
-      .nodeRelSize(1.3)
+      .nodeRelSize(1.9)
       .backgroundColor('#000003')
       .cooldownTicks(900)
       .nodeThreeObject((node: Node) => {
@@ -179,20 +179,20 @@ onMounted(async () => {
       })
 
       .onNodeClick((node: Node) => {
-          // Aim at node from outside it
-          const distance = 40;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+        // Aim at node from outside it
+        const distance = 40;
+        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
 
-          const newPos = node.x || node.y || node.z
-            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
-            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+        const newPos = node.x || node.y || node.z
+          ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+          : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
-          myGraph.cameraPosition(
-            newPos, // new position
-            node, // lookAt ({ x, y, z })
-            3000  // ms transition duration
-          );
-        })
+        myGraph.cameraPosition(
+          newPos, // new position
+          node, // lookAt ({ x, y, z })
+          3000  // ms transition duration
+        );
+      })
 
       .onNodeDrag(function (node: NodeObject | null) {
         myGraph.nodeColor(() => {
@@ -228,18 +228,28 @@ onMounted(async () => {
 <template>
   <div ref="graph"></div>
   <Transition>
-  <div ref="infoBox" class="info-box" v-if="hoveredNode">
-    <p>Name: {{ hoveredNode.name }}</p>
-    <p>Peer Num: {{ hoveredNode.peer_num }}</p>
-    <p>Network: {{ hoveredNode.network.join(", ") }}</p>
-    <p>Meta: {{ hoveredNode.meta.display }}</p>
-  </div>
-</Transition>
+    <div ref="infoBox" class="info-box" v-if="hoveredNode">
+      <p>Meta Name: {{ hoveredNode.meta.display }}</p>
+      <p>ASN: {{ hoveredNode.name }}</p>
+      <p>Peer Num: </p>
+      <p id="peer_num">{{ hoveredNode.peer_num }}</p>
+      <p>Network: </p>
+      <p>{{ hoveredNode.network.join("\n") }}</p>
+    </div>
+  </Transition>
 </template>
 
 
 <style scoped>
 
+#peer_num {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #f26803;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 .info-box {
   position: absolute;
   top: 1rem;
@@ -258,9 +268,8 @@ onMounted(async () => {
   text-align: left;
   opacity: 0.9;
   overflow: auto;
-  word-break: break-all;
-  word-wrap: break-word;
-  white-space: pre-wrap;
+  word-break: keep-all;
+  word-wrap: normal;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -276,5 +285,6 @@ onMounted(async () => {
 .v-leave-to {
   opacity: 0;
 }
+
 
 </style>
