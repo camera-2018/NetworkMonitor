@@ -149,7 +149,9 @@ onMounted(async () => {
       .linkOpacity(0.3)
       .enableNavigationControls(true)
       .nodeLabel("")
-      .nodeColor('#138385')
+      .nodeColor(() => {
+        return "#138385"
+      })
       .nodeResolution(32)
       .nodeRelSize(2)
       .backgroundColor('#000003')
@@ -162,7 +164,7 @@ onMounted(async () => {
         sprite.color = "#ff6f00";
         sprite.textHeight = 1.3;
         sprite.strokeWidth = "1";
-        sprite.strokeColor = "#cccccc";
+        sprite.strokeColor = "#000000";
         sprite.renderOrder = 999;
         sprite.material.depthTest = false;
         group.add(sprite);
