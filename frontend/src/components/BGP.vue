@@ -161,7 +161,7 @@ onMounted(async () => {
         nodeSprites.set(node.name, sprite);
         const group = new Object3D();
         sprite.material.depthWrite = false;
-        sprite.color = "#ff6f00";
+        sprite.color = "#4fc1ff";
         sprite.textHeight = 1.3;
         sprite.strokeWidth = "1";
         sprite.strokeColor = "#000000";
