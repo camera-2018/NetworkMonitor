@@ -8,12 +8,12 @@ export default defineConfig({
     outDir: '../backend/static',
     emptyOutDir: true,
   },
-  server:{
-    proxy: {
-        '/api': {
-          target: 'http://monitor.dn11.baimeow.cn',
-          changeOrigin: true
-        }
-    }
-  }
+  // server:{
+  //   proxy: {
+  //       '/api': {
+  //         target: 'http://monitor.dn11.baimeow.cn',
+  //         changeOrigin: true
+  //       }
+  //   }
+  // }
 })
