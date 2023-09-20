@@ -149,23 +149,20 @@ onMounted(async () => {
       .linkOpacity(0.3)
       .enableNavigationControls(true)
       .nodeLabel("")
-      .nodeColor((node: NodeObject) => {
-        return "#138385"
-      })
+      .nodeColor('#138385')
       .nodeResolution(32)
       .nodeRelSize(2)
       .backgroundColor('#000003')
       .cooldownTicks(900)
-
       .nodeThreeObject((node: Node) => {
         const sprite = new SpriteText(node.name);
         nodeSprites.set(node.name, sprite);
         const group = new Object3D();
         sprite.material.depthWrite = false;
-        sprite.color = "#ffbbff";
+        sprite.color = "#ff6f00";
         sprite.textHeight = 1.3;
         sprite.strokeWidth = "1";
-        sprite.strokeColor = "#0c0c0c";
+        sprite.strokeColor = "#cccccc";
         sprite.renderOrder = 999;
         sprite.material.depthTest = false;
         group.add(sprite);
@@ -177,6 +174,22 @@ onMounted(async () => {
       .onNodeHover(function (node: NodeObject | null) {
         hoveredNode.value = node ? node as Node : null;
       })
+
+      .onNodeClick((node: Node) => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          const newPos = node.x || node.y || node.z
+            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+          myGraph.cameraPosition(
+            newPos, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+        })
 
       .onNodeDrag(function (node: NodeObject | null) {
         myGraph.nodeColor(() => {
@@ -193,14 +206,13 @@ onMounted(async () => {
             if (link.source.id === node.id || link.target.id === node.id) {
               return "#ffbbff"
             }
-            return "#138385"
+            return "#ffffff"
           })
         }
       })
       .graphData(gData)
-    myGraph.onEngineStop(() => myGraph.zoomToFit(400));
     const bloomPass = new UnrealBloomPass();
-    bloomPass.strength = 3;
+    bloomPass.strength = 2.3;
     bloomPass.radius = 1;
     bloomPass.threshold = 0;
     myGraph.postProcessingComposer().addPass(bloomPass);
