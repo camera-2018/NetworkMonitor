@@ -24,7 +24,7 @@ interface Link {
 }
 
 export async function getBGP() {
-  const res = await axios.get('http://monitor.dn11.baimeow.cn/api/bgp');
+  const res = await axios.get('/api/bgp');
   return res.data as Resp<BGP>;
 }
 
