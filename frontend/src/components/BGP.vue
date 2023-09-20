@@ -178,7 +178,24 @@ onMounted(async () => {
         hoveredNode.value = node ? node as Node : null;
       })
 
-      .onNodeClick((node: Node) => {
+      .onNodeClick(function (node: NodeObject | null) {
+        myGraph.nodeColor(() => {
+          return "#138385"
+        })
+        if (node) {
+          myGraph.nodeColor((tnode: NodeObject) => {
+            if (node.id === tnode.id) {
+              return "#ffbbff"
+            }
+            return "#138385"
+          })
+          myGraph.linkColor((link: LinkObject) => {
+            if (link.source.id === node.id || link.target.id === node.id) {
+              return "#ffbbff"
+            }
+            return "#ffffff"
+          })
+        }
         // Aim at node from outside it
         const distance = 40;
         const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
@@ -190,10 +207,9 @@ onMounted(async () => {
         myGraph.cameraPosition(
           newPos, // new position
           node, // lookAt ({ x, y, z })
-          3000  // ms transition duration
+          1000  // ms transition duration
         );
       })
-
       .onNodeDrag(function (node: NodeObject | null) {
         myGraph.nodeColor(() => {
           return "#138385"
