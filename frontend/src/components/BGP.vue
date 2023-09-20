@@ -153,7 +153,7 @@ onMounted(async () => {
         return "#138385"
       })
       .nodeResolution(32)
-      .nodeRelSize(2)
+      .nodeRelSize(1.3)
       .backgroundColor('#000003')
       .cooldownTicks(900)
       .nodeThreeObject((node: Node) => {
@@ -162,8 +162,9 @@ onMounted(async () => {
         const group = new Object3D();
         sprite.material.depthWrite = false;
         sprite.color = "#4fc1ff";
-        sprite.textHeight = 1.3;
+        sprite.textHeight = Math.pow(node.peer_num, 1 / 2) * 1;
         sprite.strokeWidth = "1";
+        sprite.position.z = Math.pow(node.peer_num, 1 / 2) * 3;
         sprite.strokeColor = "#000000";
         sprite.renderOrder = 999;
         sprite.material.depthTest = false;
